@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Exploration Masterclass | Interactive Tutorial</title>
+
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5.3 CSS/icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="tutorial/style.css">
+</head>
+
+<body>
+    <video src="https://svgapp.ai/_astro/otter-skateboard-transparent.D9ELGXsj.webm"
+        aria-label="Otter - Skateboard - animation from svgapp.ai" autoplay loop muted playsinline preload="metadata"
+        class="xxxxx"></video>
+
+    <!-- Top Sticky Header with Stepper Pills & Progress Bar -->
+    <header class="navbar-space sticky-top">
+        <div class="container py-2">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <!-- Brand -->
+                <a class="navbar-brand d-flex align-items-center gap-2 brand-font fw-bold text-white text-decoration-none"
+                    href="#" data-bs-target="#tutorialCarousel" data-bs-slide-to="0">
+                    <span>CLOVER</span>
+                </a>
+
+                <!-- Clickable Stepper Pills (Scrollable on mobile) -->
+                <div class="d-flex align-items-center gap-2 overflow-auto py-1" id="stepperPills" role="tablist"
+                    aria-label="Tutorial Steps">
+                    <button type="button" class="step-pill active" data-step="0" hidden>01. Intro</button>
+                    <button type="button" class="step-pill" data-step="1">01. Mars Facts</button>
+                    <button type="button" class="step-pill" data-step="2">02. Missions</button>
+                    <button type="button" class="step-pill" data-step="3">03. Korolev Crater</button>
+                </div>
+
+                <!-- Step Counter Badge -->
+                <span class="badge rounded-pill bg-dark border border-secondary-subtle px-3 py-2 text-info fw-semibold"
+                    id="topStepCounter">
+                    0 of 3
+                </span>
+            </div>
+        </div>
+        <!-- Sleek Progress Bar -->
+        <div class="progress rounded-0" style="height: 3px; background: rgba(255,255,255,0.06);">
+            <div id="tutorialProgressBar" class="progress-bar" role="progressbar"
+                style="width: 20%; background: linear-gradient(90deg, #e05a36, #38bdf8); transition: width 0.4s ease;"
+                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </header>
+
+    <!-- Main Interactive Carousel Deck -->
+    <main class="tutorial-stage">
+        <div id="tutorialCarousel" class="carousel slide" data-bs-interval="false" data-bs-wrap="false"
+            data-bs-touch="true">
+            <div class="carousel-inner">
+
+                <!-- =========================================================
+                     SLIDE 1: WELCOME / HERO OVERVIEW
+                ========================================================== -->
+                <div class="carousel-item active">
+                    <div class="container py-3 py-lg-4">
+                        <div class="row align-items-center gy-5">
+                            <div class="col-lg-7">
+                                <h1 class="display-4 fw-bold text-white">Mars Exploration</h1>
+                                <p class="lead text-secondary mb-4" style="max-width: 610px;">
+                                    Welcome to your step-by-step guide to the fourth planet from the Sun. Click <strong
+                                        class="text-white">Next</strong> to progress through Martian physics, 60 years
+                                    of robotic missions, and the permanent ice dome inside <strong
+                                        class="text-info">Korolev Crater</strong>.
+                                </p>
+
+                                <!-- Quick Overview Roadmap Cards -->
+                                <div class="row g-2 mb-4">
+                                    <div class="col-sm-6">
+                                        <div class="p-3 rounded-3 bg-dark border border-secondary-subtle h-100">
+                                            <h6 class="text-white fw-bold mb-1"><span
+                                                    class="badge badge-mars mb-1">01</span> &nbsp; Planetary
+                                                Fundamentals</h6>
+                                            <p class="small text-secondary mb-0">Gravity calculator, moons Phobos &amp;
+                                                Deimos, Olympus Mons &amp; Valles Marineris.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="p-3 rounded-3 bg-dark border border-secondary-subtle h-100">
+
+                                            <h6 class="text-white fw-bold mb-1"><span
+                                                    class="badge badge-mars mb-1">02</span> &nbsp;Mars Mission History
+                                            </h6>
+                                            <p class="small text-secondary mb-0">From Mariner 4 flybys to Viking,
+                                                Pathfinder, Curiosity, and Perseverance.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="p-3 rounded-3 bg-dark border border-secondary-subtle h-100">
+
+                                            <h6 class="text-white fw-bold mb-1"> <span
+                                                    class="badge badge-ice mb-1">03</span> &nbsp;Korolev Crater</h6>
+                                            <p class="small text-secondary mb-0">Interactive SVG cross-section of the
+                                                1.8 km ice dome &amp; Cold Trap shield.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <span class="small text-secondary">
+                                    <i class="bi bi-keyboard me-1"></i> Tip: Use <kbd>←</kbd> <kbd>→</kbd> arrow keys or
+                                    buttons below
+                                </span>
+                            </div>
+
+                            <div class="col-lg-5 text-center">
+                                <img src="tutorial/Mars_360_animation.gif" alt="mars rotating image" height="340">
+                                <div class="d-flex justify-content-center flex-wrap gap-2 mt-4">
+                                    <span
+                                        class="badge rounded-pill bg-dark border border-secondary-subtle px-3 py-2 fw-normal">
+                                        <i class="bi bi-arrow-down-circle text-warning me-1"></i> 3.72 m/s² (38% Earth)
+                                    </span>
+                                    <span
+                                        class="badge rounded-pill bg-dark border border-secondary-subtle px-3 py-2 fw-normal">
+                                        <i class="bi bi-clock-history text-danger me-1"></i> Sol: 24.6 hrs
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- =========================================================
+                     SLIDE 2: MODULE 1 — MARS INTRODUCTION & PLANETARY FACTS
+                ========================================================== -->
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="mb-4">
+                            <div class="module-badge badge-mars mb-2">Planetary Fundamentals</div>
+                            <h2 class="h2 fw-bold text-white mb-1">Understanding the Red Planet</h2>
+                            <p class="text-secondary mb-0">
+                                Mars is a dusty, cold desert world with a thin CO₂ atmosphere, two asteroid-like moons,
+                                and the largest geological landmarks in our solar system.
+                            </p>
+                        </div>
+
+                        <div class="row g-4">
+                            <!-- Interactive Gravity Calculator Card -->
+                            <div class="col-lg-5">
+                                <div class="space-card p-4 h-100 d-flex flex-column justify-content-between"
+                                    style="border-color: rgba(245, 158, 11, 0.35);">
+                                    <div>
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <span class="badge bg-warning text-dark fw-semibold">Interactive Lab</span>
+                                            <i class="bi bi-calculator fs-4 text-warning"></i>
+                                        </div>
+                                        <h4 class="text-white fw-bold mb-2">Your Weight on Mars</h4>
+                                        <p class="small text-secondary mb-3">
+                                            Surface gravity on Mars is <strong>3.72 m/s²</strong> (about <strong>38% of
+                                                Earth's</strong>). Adjust your Earth weight below to calculate your
+                                            Martian weight.
+                                        </p>
+
+                                        <div class="mb-3">
+                                            <label for="earthWeightInput"
+                                                class="form-label small text-uppercase text-secondary fw-semibold">
+                                                Earth Weight (<span id="unitLabel">KG</span>)
+                                            </label>
+                                            <div class="input-group mb-2">
+                                                <input type="number" id="earthWeightInput"
+                                                    class="form-control bg-dark text-white border-secondary" value="62"
+                                                    min="1" max="2000">
+                                            </div>
+                                            <input type="range" class="form-range" id="earthWeightSlider" min="20"
+                                                max="100" value="62">
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3 rounded-3 mt-2"
+                                        style="background: rgba(224, 90, 54, 0.12); border: 1px solid rgba(224, 90, 54, 0.3);">
+                                        <div class="row text-center">
+                                            <div class="col-6 border-end border-secondary-subtle">
+                                                <span class="d-block small text-secondary">Mars Weight</span>
+                                                <span class="fs-2 fw-bold text-white" id="marsWeightOutput">23.5</span>
+                                                <span class="small text-warning fw-semibold"
+                                                    id="marsUnitOutput">KG</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="d-block small text-secondary">Jump Height</span>
+                                                <span class="fs-2 fw-bold text-info">~2.6x</span>
+                                                <span class="small text-secondary d-block">higher than Earth</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Core Planetary Metrics Grid -->
+                            <div class="col-lg-7">
+                                <div class="row g-3 h-100">
+                                    <div class="col-md-6">
+                                        <div class="space-card p-3 h-100">
+                                            <div class="text-warning fs-4 mb-1"><i
+                                                    class="bi bi-arrows-angle-expand"></i></div>
+                                            <h6 class="text-white fw-bold">Size &amp; Distance</h6>
+                                            <p class="small text-secondary mb-1">
+                                                Radius of <strong>2,106 mi (3,390 km)</strong>—half Earth's size. Orbits
+                                                at <strong>142M mi (1.5 AU)</strong>; sunlight takes <strong>13
+                                                    mins</strong> to arrive.
+                                            </p>
+                                            <p class="small text-info mb-0">
+                                                <i class="bi bi-lightbulb me-1"></i> Dry land area equals nearly all of
+                                                Earth's continents!
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="space-card p-3 h-100">
+                                            <div class="text-danger fs-4 mb-1"><i class="bi bi-arrow-repeat"></i></div>
+                                            <h6 class="text-white fw-bold">Orbit, Sols &amp; Tilt</h6>
+                                            <p class="small text-secondary mb-1">
+                                                1 Martian day (<strong>sol</strong>) = <strong>24.6 hrs</strong>. 1 year
+                                                = <strong>687 Earth days</strong> (669.6 sols).
+                                            </p>
+                                            <p class="small text-info mb-0">
+                                                <i class="bi bi-lightbulb me-1"></i> <strong>25° axial tilt</strong>
+                                                &amp; elliptical orbit create unequal seasons (142–194 sols).
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="space-card p-3 h-100">
+                                            <div class="text-warning fs-4 mb-1"><i class="bi bi-triangle-fill"></i>
+                                            </div>
+                                            <h6 class="text-white fw-bold">Extreme Topography</h6>
+                                            <p class="small text-secondary mb-1">
+                                                <strong>Olympus Mons:</strong> Tallest volcano in the solar system at
+                                                <strong>25 mi (40 km)</strong> high (Arizona-sized base).
+                                            </p>
+                                            <p class="small text-info mb-0">
+                                                <strong>Valles Marineris:</strong> 2,400 mi long canyon—10× longer than
+                                                the Grand Canyon.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="space-card p-3 h-100">
+                                            <div class="text-danger fs-4 mb-1"><i class="bi bi-moon-stars-fill"></i>
+                                            </div>
+                                            <h6 class="text-white fw-bold">Two Moons: Phobos &amp; Deimos</h6>
+                                            <p class="small text-secondary mb-1">
+                                                Potato-shaped captured asteroids named after Ares's chariot horses.
+                                            </p>
+                                            <p class="small text-info mb-0">
+                                                <i class="bi bi-lightbulb me-1"></i> <strong>Phobos</strong> is
+                                                spiraling inward and may form a ring in ~50M years.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- =========================================================
+                     SLIDE 3: MODULE 2 — MARS MISSION HISTORY
+                ========================================================== -->
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="text-center mb-4">
+                            <div class="module-badge badge-mars mb-2">02: Exploration Timeline</div>
+                            <h2 class="h2 fw-bold text-white">60 Years of Mars Missions</h2>
+                            <p class="text-secondary mx-auto mb-0" style="max-width: 660px;">
+                                Switch between exploration eras below to trace humanity's progression from early flybys
+                                to nuclear-powered roving laboratories and international orbiters.
+                            </p>
+                        </div>
+
+                        <!-- Interactive Bootstrap Pills Stepper -->
+                        <ul class="nav nav-pills nav-pills-mars justify-content-center mb-4" id="missionTabs"
+                            role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active fw-semibold" id="era1-tab" data-bs-toggle="pill"
+                                    data-bs-target="#era1" type="button" role="tab" aria-controls="era1"
+                                    aria-selected="true">
+                                    <span class="badge bg-secondary me-2">Era 1</span> 1960s: The Flyby Era
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-semibold" id="era2-tab" data-bs-toggle="pill"
+                                    data-bs-target="#era2" type="button" role="tab" aria-controls="era2"
+                                    aria-selected="false">
+                                    <span class="badge bg-secondary me-2">Era 2</span> 1970s–1990s: Orbiters &amp;
+                                    Landers
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link fw-semibold" id="era3-tab" data-bs-toggle="pill"
+                                    data-bs-target="#era3" type="button" role="tab" aria-controls="era3"
+                                    aria-selected="false">
+                                    <span class="badge bg-secondary me-2">Era 3</span> 2000s–Present: Astrobiology Fleet
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="missionTabsContent">
+                            <!-- Era 1 Content -->
+                            <div class="tab-pane fade show active" id="era1" role="tabpanel" aria-labelledby="era1-tab">
+                                <div class="row g-4 justify-content-center">
+                                    <div class="col-md-6">
+                                        <div class="space-card p-4 h-100">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <span class="badge badge-mars">July 1965 • NASA</span>
+                                                <span class="text-secondary small">First Successful Flyby</span>
+                                            </div>
+                                            <h4 class="text-white fw-bold">Mariner 4</h4>
+                                            <p class="text-secondary small">
+                                                Following early Soviet Mars probe attempts, NASA's Mariner 4 executed
+                                                the first successful flyby of Mars, capturing 22 close-up television
+                                                images of the cratered surface.
+                                            </p>
+                                            <div class="p-3 rounded-3 bg-dark border border-secondary-subtle small">
+                                                <strong class="text-warning">Key Breakthrough:</strong> Revealed an
+                                                ancient cratered terrain and ultra-thin atmosphere, dispelling
+                                                19th-century myths of Martian "canals."
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="space-card p-4 h-100">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <span class="badge badge-mars">1969 • NASA</span>
+                                                <span class="text-secondary small">Dual Flyby Mapping</span>
+                                            </div>
+                                            <h4 class="text-white fw-bold">Mariner 6 &amp; Mariner 7</h4>
+                                            <p class="text-secondary small">
+                                                Twin spacecraft flew over the Martian equator and south polar cap, using
+                                                infrared and ultraviolet spectrometers to analyze atmospheric
+                                                composition and surface temperatures.
+                                            </p>
+                                            <div class="p-3 rounded-3 bg-dark border border-secondary-subtle small">
+                                                <strong class="text-warning">Key Breakthrough:</strong> Confirmed the
+                                                Martian atmosphere is predominantly carbon dioxide (CO₂) and measured
+                                                frozen polar cap temperatures.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 2 Content -->
+                            <div class="tab-pane fade" id="era2" role="tabpanel" aria-labelledby="era2-tab">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="space-card p-4 h-100">
+                                            <span class="badge badge-mars mb-2">1971 • First Planetary Orbiter</span>
+                                            <h4 class="text-white fw-bold">Mariner 9</h4>
+                                            <p class="small text-secondary mb-0">
+                                                Became the first spacecraft to orbit another planet. Arriving during a
+                                                global dust storm, it waited out the dust to map 85% of Mars—discovering
+                                                Olympus Mons and Valles Marineris.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="space-card p-4 h-100">
+                                            <span class="badge badge-mars mb-2">1976 • Surface Landers</span>
+                                            <h4 class="text-white fw-bold">Viking 1 &amp; Viking 2</h4>
+                                            <p class="small text-secondary mb-0">
+                                                Twin orbiter-lander pairs. Viking 1 captured the first high-resolution
+                                                color panoramas from the Martian surface and ran automated biological
+                                                soil experiments.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="space-card p-4 h-100">
+                                            <span class="badge badge-mars mb-2">1997 • First Mars Rover</span>
+                                            <h4 class="text-white fw-bold">Pathfinder &amp; Sojourner</h4>
+                                            <p class="small text-secondary mb-0">
+                                                Bounced onto Mars inside giant airbags and deployed <em>Sojourner</em>—a
+                                                microwave-sized, 6-wheeled rover that proved mobile robotics could
+                                                navigate alien terrain.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Era 3 Content -->
+                            <div class="tab-pane fade" id="era3" role="tabpanel" aria-labelledby="era3-tab">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="space-card p-4 h-100">
+                                            <span class="badge badge-mars mb-2">2004 • Water Detectives</span>
+                                            <h4 class="text-white fw-bold">Spirit &amp; Opportunity</h4>
+                                            <p class="small text-secondary mb-0">
+                                                Twin robotic geologists built for 90-sol missions that lasted years
+                                                (Opportunity ran nearly 15 years!), proving liquid water once flowed
+                                                across ancient Mars.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="space-card p-4 h-100">
+                                            <span class="badge badge-mars mb-2">2012 &amp; 2021 • Nuclear Labs</span>
+                                            <h4 class="text-white fw-bold">Curiosity &amp; Perseverance</h4>
+                                            <p class="small text-secondary mb-0">
+                                                Car-sized rovers lowered by Sky Crane. Curiosity confirmed a habitable
+                                                ancient lake in Gale Crater; Perseverance caches biosignature cores and
+                                                flew the <em>Ingenuity</em> helicopter.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="space-card p-4 h-100">
+                                            <span class="badge badge-ice mb-2">Global Fleet • International</span>
+                                            <h4 class="text-white fw-bold">Hope, Mangalyaan &amp; Tianwen-1</h4>
+                                            <p class="small text-secondary mb-0">
+                                                ESA's <em>Mars Express</em> mapped Korolev Crater in 3D, joined by
+                                                India's <em>Mangalyaan</em>, the UAE's <em>Hope</em> orbiter, and
+                                                China's <em>Tianwen-1</em> orbiter and <em>Zhurong</em> rover.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- =========================================================
+                     SLIDE 4: MODULE 3 — ANATOMY OF KOROLEV CRATER
+                ========================================================== -->
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="mb-3">
+                            <div class="module-badge badge-ice mb-2">03: Geological Deep Dive</div>
+                            <h2 class="h2 fw-bold text-white mb-1">Anatomy of <span
+                                    style="color: var(--korolev-ice);">Korolev Crater</span></h2>
+                            <p class="text-secondary small mb-0">
+                                Located at <strong style="font-size: 1rem;">(72.08-73.45)°N, (162.27-166.90)°E</strong>
+                                in the northern
+                                lowlands and named after Soviet rocket engineer <strong style="font-size: 1rem;">Sergei
+                                    Korolev</strong>, this basin holds a permanent 1.8 km dome of water ice.
+                            </p>
+                        </div>
+
+                        <!-- Key Korolev Stat Cards -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-6 col-md-3">
+                                <div class="space-card space-card-ice p-2 px-3 text-center h-100">
+                                    <span class="small text-secondary d-block">Crater Diameter</span>
+                                    <span class="fs-4 fw-bold text-white">81.4 km</span>
+                                    <span class="small text-info d-block">50.6 miles wide</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="space-card space-card-ice p-2 px-3 text-center h-100">
+                                    <span class="small text-secondary d-block">Central Ice Thickness</span>
+                                    <span class="fs-4 fw-bold text-info">1.8 km</span>
+                                    <span class="small text-secondary d-block">1.1 miles deep year-round</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="space-card space-card-ice p-2 px-3 text-center h-100">
+                                    <span class="small text-secondary d-block">Estimated Ice Volume</span>
+                                    <span class="fs-4 fw-bold text-white">~2,200 km³</span>
+                                    <span class="small text-info d-block">530 cubic miles of ice</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="space-card space-card-ice p-2 px-3 text-center h-100">
+                                    <span class="small text-secondary d-block">Rim Elevation</span>
+                                    <span class="fs-4 fw-bold text-warning">~2.0 km</span>
+                                    <span class="small text-secondary d-block">Above surrounding basin</span>
+                                </div>
+                            </div>
+                            <div class="container space-card my-4">
+                                <div class="row">
+                                    <div class="col-md-6 p-4">
+                                        <p class="">
+                                            <strong>Korolev</strong> Crater is an 82 km-wide impact crater near Mars'
+                                            north pole. It contains a massive deposit of water ice that remains frozen
+                                            year-round due to a layer of cold air above it. This makes it valuable for
+                                            studying Martian water resources and future human exploration.
+
+                                            <br><br>
+                                            <strong>Formation:</strong> Korolev Crater was formed billions of years ago
+                                            when a large asteroid
+                                            struck the surface of Mars, creating an impact basin approximately 82 km
+                                            wide.
+
+                                            <br><br>
+                                            <strong>potential Use:</strong> Its massive water ice deposits could provide
+                                            drinking water,
+                                            oxygen, and rocket fuel for future Mars missions. It may also support
+                                            scientific
+                                            research and serve as a potential base for human exploration.
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6 d-flex justify-content-center align-items-center">
+                                        <a href="./main.html" class="image-link">
+                                            <img src="./tutorial/plan_view.png"
+                                                class="border rounded-3 Central zoom-image" width="300" alt="Korolev">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Sticky Tutorial Control Bar ("Previous / Next Step") -->
+    <nav class="bottom-control-bar" aria-label="Tutorial Slide Controls">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between gap-3">
+                <button type="button" class="btn btn-outline-light px-3 px-md-4 rounded-3" id="prevSlideBtn" disabled>
+                    <i class="bi bi-arrow-left me-1"></i> Previous
+                </button>
+                <div class="text-center d-none sm-block d-sm-block">
+                    <span class="small text-secondary d-block" id="bottomSlideTitle">Welcome &amp; Overview</span>
+                </div>
+                <button type="button" class="btn btn-mars px-3 px-md-4" id="nextSlideBtn">
+                    Next <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Bootstrap js 5.3-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="tutorial/script.js"></script>
+</body>
+
+</html>
