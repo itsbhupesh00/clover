@@ -270,12 +270,6 @@
             transform: scaleX(-1);
         }
 
-@media (max-width: 768px) {
-    .xxxxx {
-        left: -20%;
-    }
-}
-
         .image-link {
             display: inline-block;
             position: relative;
