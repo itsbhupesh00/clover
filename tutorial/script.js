@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pct = Math.round((stepNum / totalSlides) * 100);
 
         // Update top badge & progress bar
-        topStepCounter.textContent = `Step ${stepNum-1} of ${totalSlides-1}`;
+        topStepCounter.textContent = `Step ${stepNum - 1} of ${totalSlides - 1}`;
         progressBar.style.width = `${pct}%`;
         progressBar.setAttribute('aria-valuenow', pct);
         bottomSlideTitle.textContent = slideTitles[index];
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeSlideIndex < totalSlides - 1) {
             tutorialCarousel.next();
         } else {
-            window.location.href = "./../main.html";
+            smoothNavigate("./../main.html");
         }
     });
 
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 document.querySelectorAll('.image-link').forEach(link => {
-    link.addEventListener('click', function(e) {
+    link.addEventListener('click', function (e) {
         e.preventDefault();
 
         const img = this.querySelector('img');
@@ -164,4 +164,22 @@ document.querySelectorAll('.image-link').forEach(link => {
             window.location.href = this.href;
         }, 700);
     });
+});
+
+function smoothNavigate(url) {
+    document.body.classList.add('fade-out');
+
+    setTimeout(() => {
+        window.location.href = url;
+    }, 600);
+}
+document.querySelectorAll('.smooth-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        smoothNavigate(this.href);
+    });
+});
+
+window.addEventListener('pageshow', () => {
+    document.body.classList.remove('fade-out');
 });

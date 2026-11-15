@@ -115,3 +115,28 @@ Promise.all([load(HM), load(PH), load(TP)]).then(([hi, ph, tp]) => {
   mesh = new THREE.Mesh(new THREE.PlaneGeometry(S, S, 255, 255).rotateX(-Math.PI / 2), new THREE.MeshStandardMaterial({ map: tex.P, roughness: 1 })); mesh.userData.k = 'P'; scene.add(mesh);
   rover = mkRover(); scene.add(rover); shape(); frame()
 });
+
+
+const popup = document.getElementById('researchPopup');
+
+function closeResearchPopup() {
+    popup.classList.remove('show');
+}
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        popup.classList.add('show');
+    }, 1000);
+});
+
+document.getElementById('closePopup')
+    .addEventListener('click', closeResearchPopup);
+
+document.getElementById('dismissPopup')
+    .addEventListener('click', closeResearchPopup);
+
+popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+        closeResearchPopup();
+    }
+});

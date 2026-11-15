@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Korolev Rover Drive</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -44,6 +45,46 @@
     combined by the team under the same license. Heights come from the map's color legend; latitude, longitude and scale
     are approximate.</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <div id="researchPopup" class="popup-overlay">
+  <div class="popup-box">
+    <button class="popup-close" id="closePopup">&times;</button>
+
+    <span class="popup-tag">SCIENTIFIC RESEARCH · 2013</span>
+    <h2>Korolev: A 2-km-thick Ice Dome</h2>
+
+    <p>
+      A detailed SHARAD radar investigation by T. C. Brothers and
+      J. W. Holt (University of Texas) reconstructed the internal
+      stratigraphy of Korolev Crater on Mars.
+    </p>
+
+    <h3>Key Findings</h3>
+    <ul>
+      <li><strong>Ice depth:</strong> Subsurface radar reflectors extend to approximately 1.8 km beneath the surface.</li>
+      <li><strong>Ice volume:</strong> Conservative estimates indicate approximately 1,580 km³ of ice-rich material.</li>
+      <li><strong>Layer structure:</strong> Multiple irregularly spaced radar reflectors reveal alternating ice-rich and reflector-poor zones.</li>
+      <li><strong>Climate connection:</strong> Korolev's upper ice layers show similarities to the North Polar Layered Deposits (NPLD), suggesting a shared regional climate signal.</li>
+      <li><strong>Local influences:</strong> Solar ablation thins and tilts ice layers on south-facing slopes, while deposition is stronger near the northern crater wall.</li>
+    </ul>
+
+    <h3>Research Significance</h3>
+    <p>
+      The findings support atmospheric deposition and localized,
+      relatively steady growth of Korolev's ice dome rather than
+      accumulation from a larger former ice sheet. Its layered
+      structure preserves evidence of past Martian climate conditions.
+    </p>
+
+    <div class="popup-source">
+      Source: Brothers & Holt, 44th Lunar and Planetary Science Conference (2013), Abstract 3022.
+    </div>
+
+    <button class="popup-action" id="dismissPopup">Explore the Crater</button>
+  </div>
+</div>
+
 </body>
+
+<script src="script.js"></script> 
 
 </html>
