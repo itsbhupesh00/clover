@@ -269,35 +269,43 @@
             pointer-events: none;
             transform: scaleX(-1);
         }
+
+@media (max-width: 768px) {
+    .xxxxx {
+        left: -100px;
+    }
+}
+
         .image-link {
-    display: inline-block;
-    position: relative;
-}
+            display: inline-block;
+            position: relative;
+        }
 
-.zoom-image {
-    cursor: pointer;
-    transition: all 0.8s ease-in-out;
-    transform-origin: top left;
-}
+        .zoom-image {
+            cursor: pointer;
+            transition: all 0.8s ease-in-out;
+            transform-origin: top left;
+        }
 
-.zoom-image.zooming {
-    position: fixed;
-    z-index: 99999;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
-    border-radius: 0 !important;
-}
+        .zoom-image.zooming {
+            position: fixed;
+            z-index: 99999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+            border-radius: 0 !important;
+        }
 
-@keyframes zoomFullscreen {
-    from {
-        width: 300px;
-        height: auto;
-        transform: translate(-50%, -50%) scale(0.3);
-    }
-    to {
-        transform: translate(-50%, -50%) scale(2);
-    }
-}
+        @keyframes zoomFullscreen {
+            from {
+                width: 300px;
+                height: auto;
+                transform: translate(-50%, -50%) scale(0.3);
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(2);
+            }
+        }
