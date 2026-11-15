@@ -21,7 +21,8 @@
     <div class="row"><button id="mO" class="on">Orbit</button><button id="mC">Follow</button><button
         id="mP">Cockpit</button></div>
     <div class="row"><button id="lP" class="on">Photo</button><button id="lE">Elevation</button><button
-        id="lH">Danger</button></div>
+        id="lH">Danger</button><button id="lM" title="NASA MOLA global elevation reference"
+        aria-label="NASA MOLA elevation">MOLA</button></div>
     <div class="row"><button id="bPl">Play</button><button id="bRs">Restart</button></div>
     <label for="wp">Rover speed <span id="vW">60 m/s</span></label>
     <input id="wp" type="range" min="15" max="100" step="1" value="60">
@@ -38,11 +39,13 @@
       <label>Season (Ls) <span id="vQ">120°</span></label><input id="rQ" type="range" min="0" max="359" value="120">
     </details>
     <div>Terrain height: 1.1× map scale</div>
+    <div class="data-note">NASA MOLA is a coarse reference; its color ramp spans this crop's −22,555 to −19,489 m range. Route and danger overlays use HRSC terrain.</div>
     <div id="msg"></div>
   </div>
-  <div id="cred">Imagery &amp; topography: ESA/DLR/FU Berlin (HRSC, Mars Express), CC BY-SA 3.0 IGO. Cropped and
-    combined by the team under the same license. Heights come from the map's color legend; latitude, longitude and scale
-    are approximate.</div>
+  <div id="cred">NASA MOLA: MGS MEGDR, 32 pixels/degree (~1.85 km/pixel at the equator), crop heights relative to a
+    3,396 km radius; <a href="https://doi.org/10.17189/1519460" target="_blank" rel="noopener">PDS dataset citation</a>.
+    Imagery and simulator terrain: ESA/DLR/FU Berlin HRSC, Mars Express, CC BY-SA 3.0 IGO; cropped and combined under the
+    same license. HRSC heights are approximate.</div>
   <div id="researchPopup" class="popup-overlay">
   <div class="popup-box">
     <button class="popup-close" id="closePopup"> close X </button>

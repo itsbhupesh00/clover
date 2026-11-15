@@ -223,6 +223,14 @@
       font-size: 12px
     }
 
+    .data-note {
+      max-width: 46ch;
+      margin: 4px 0;
+      color: var(--mute);
+      font-size: 10px;
+      line-height: 1.4
+    }
+
     #cred {
       position: fixed;
       right: 12px;
@@ -231,6 +239,10 @@
       color: var(--mute);
       max-width: 44ch;
       text-align: right
+    }
+
+    #cred a {
+      color: inherit
     }
 
     @media (max-width:760px) {

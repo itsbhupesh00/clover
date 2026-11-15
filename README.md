@@ -2,7 +2,9 @@
 
 Project Clover is a browser-based Mars exploration project about the Red Planet, its robotic explorers, and the water-ice dome inside Korolev Crater. It combines an illustrated Mars information page, an interactive terrain and rover simulator, and a five-level sample-retrieval game.
 
-**Explore online:** [Mars Exploration Information](https://clover.bhupesh.com.np/index.html) · [Rover Simulator in Korolov](https://clover.bhupesh.com.np/main.html) · [Mission Game](https://clover.bhupesh.com.np/game/game.html)
+**Explore online:** [Mars Exploration Information](https://clover.bhupesh.com.np/index.html) · [Korolev Rover Simulator](https://clover.bhupesh.com.np/main.html) · [Mission Game](https://clover.bhupesh.com.np/game/game.html)
+
+For instructions on using each part of the project, see the [User Guide](user_guide.md).
 
 ## Why Mars?
 
@@ -57,11 +59,22 @@ From those search results, the page:
 
 The API supplies the archived image and its descriptive metadata; the site does not use it as a live feed and does not request rover telemetry. If the API or image cannot be loaded, the page shows the bundled `tutorial/Mars_360_animation.gif` instead.
 
-The simulator does not load NASA imagery or terrain data: its terrain source is ESA/DLR/FU Berlin HRSC data as credited below. The Brothers & Holt SHARAD findings are summarized from their cited conference abstract; raw SHARAD measurements are not fetched by the site.
+### NASA data used by the simulator
+
+The simulator now includes a **NASA MOLA elevation reference layer** alongside the ESA HRSC-based terrain visualization:
+
+- **Product:** Mars Global Surveyor Laser Altimeter (MOLA) MEGDR planetary-radius raster `MEGR90N000FB.IMG`, dataset `MGS-M-MOLA-5-MEGDR-L3-V1.0`.
+- **Resolution and coverage:** 32 samples per degree (about 1.85 km per pixel at the equator); the repository contains a 65 × 257 sample crop around Korolev, not the global raster.
+- **Values and datum:** signed 16-bit, big-endian samples are represented in meters relative to the product's 3,396,000 m reference radius. The viewer maps these values by the approximate simulator latitude/longitude and bilinearly interpolates the MOLA elevation at the rover.
+- **What it is used for:** the **MOLA** layer visualizes the coarse NASA elevation crop with a color ramp normalized to the crop's minimum and maximum. The rover telemetry also shows the bilinearly interpolated MOLA elevation and the difference between that value and the HRSC-derived local height.
+- **What it does not drive:** the rendered high-detail terrain, A* route, and altitude/slope/solar danger tests still use the project-prepared HRSC map. MOLA is a comparison layer, not a navigation input or a higher-resolution replacement.
+- **Source and citation:** [NASA PDS MOLA MEGDR dataset](https://doi.org/10.17189/1519460). The extraction utility is [`tools/build_mola_crop.py`](tools/build_mola_crop.py); rerunning it downloads only the crop by HTTP byte range and regenerates [`data/mola-korolev-32ppd.json`](data/mola-korolev-32ppd.json).
+
+The Brothers & Holt SHARAD findings are summarized from their cited conference abstract; raw SHARAD measurements are not fetched or processed by the site.
 
 ## Rover simulator
 
-The simulator renders a route across a cropped Korolev-region terrain map. Use **Orbit**, **Follow**, or **Cockpit** to change the view; select **Photo**, **Elevation**, or **Danger** to change the map layer. Drag to look around, use the route slider to scrub the drive, or press **Play** to follow it. Rover speed, season (`Ls`), and the altitude, slope, and sunlight thresholds are adjustable.
+The simulator renders a route across a cropped Korolev-region terrain map. Use **Orbit**, **Follow**, or **Cockpit** to change the view; select **Photo**, **Elevation**, **Danger**, or **MOLA** to change the map layer. Drag to look around, use the route slider to scrub the drive, or press **Play** to follow it. Rover speed, season (`Ls`), and the altitude, slope, and sunlight thresholds are adjustable.
 
 ### Displayed telemetry and estimates
 
@@ -70,6 +83,8 @@ The simulator renders a route across a cropped Korolev-region terrain map. Use *
 | Latitude and longitude | Approximate map position, projected around a nominal center near `73° N, 165° E`. |
 | Height vs. 3,396 km sphere | Terrain-map elevation relative to the simulator's reference sphere. |
 | Height above crater floor | Displayed elevation minus the map's low-elevation reference (`−22,694 m`). |
+| NASA MOLA elevation | Bilinearly interpolated MOLA crop value at the approximate rover latitude/longitude, in meters relative to the 3,396,000 m reference radius. |
+| HRSC − MOLA difference | HRSC map-derived height minus the interpolated NASA MOLA value. Differences also reflect the maps' differing resolution, alignment, and source treatment. |
 | Distance from Mars center | `3,396 km + displayed elevation`. |
 | Gravity | Mars's point-mass gravitational acceleration with a latitude-dependent rotational correction: `GM/r² − ω²r cos²(latitude)`. |
 | Pressure (estimated) | Exponential barometric approximation: `610 Pa × exp(−(elevation + 18,100 m) / 11,100 m)`. |
@@ -82,7 +97,7 @@ The simulator renders a route across a cropped Korolev-region terrain map. Use *
 | Driven / left | Distance traveled and remaining route distance, accumulated along the generated path. |
 | Rover speed | User-selected speed; used to advance the route and estimate travel time. |
 
-These are **map-based visualization estimates**, not navigation-grade ephemerides or environmental measurements. Map coordinates and scale are approximate; pressure uses a simplified atmospheric model, and solar exposure omits detailed weather and terrain-shadow modeling.
+These are **map-based visualization estimates**, not navigation-grade ephemerides or environmental measurements. Map coordinates and scale are approximate; pressure uses a simplified atmospheric model, and solar exposure omits detailed weather and terrain-shadow modeling. MOLA is a coarse reference product; route and hazard calculations do not use MOLA.
 
 ### Route planning and danger overlays
 
@@ -99,6 +114,8 @@ These flags are threshold-based cautions, not predictions of rover failure or a 
 
 **Terrain and imagery source:** ESA/DLR/FU Berlin, HRSC on Mars Express, **CC BY-SA 3.0 IGO**. The map is cropped and combined by the project under the same license. Terrain heights are interpreted from the map's color legend; location and scale are approximate.
 
+**NASA elevation source:** MGS MOLA MEGDR, product `MEGR90N000FB.IMG`, dataset `MGS-M-MOLA-5-MEGDR-L3-V1.0`, [NASA PDS DOI 10.17189/1519460](https://doi.org/10.17189/1519460). The crop's source grid is 32 pixels per degree and has a substantially coarser native resolution than the HRSC visualization.
+
 ## Mission game
 
 The game is a stylized, one-person surface expedition. Each level asks you to provision the habitat, locate ice, soil, and rock sites, collect the required samples, and return them to the launch vehicle. Five levels progressively increase sample quotas, route spread, and mission duration.
@@ -109,11 +126,15 @@ The game is a stylized, one-person surface expedition. Each level asks you to pr
 4. Return to the launch pad, park beside the rocket, and launch the sample payload.
 5. Rendezvous with the **Sun–Mars L1 relay**, transfer the canisters, and return to Mars to complete the mission.
 
-The L1 relay and flight are narrative gameplay elements: the flight is compressed and the scene is not a scale model or a validated interplanetary trajectory.
+### Why the Sun–Mars L1 point matters
+
+The Sun–Mars **L1 Lagrange point** is a remarkable orbital waypoint on the line between the Sun and Mars. In an idealized rotating two-body system, the combined gravitational and orbital effects let a spacecraft remain near this location while moving with the Mars–Sun system. That vantage point makes an L1 relay an evocative concept for connecting planetary exploration with wider space operations: it could, in principle, support communications or act as a transfer point for cargo and crews.
+
+L1 is not a naturally stable parking spot, and a real spacecraft would need trajectory design and station-keeping. The relay in this game is a fictional mission concept; the flight is compressed, and the scene is not a scale model or a validated interplanetary trajectory.
 
 ### Supplies and life support
 
-The habitat panel demonstrates a periodic production cycle: every simulated 20 seconds the solar array adds `8 kWh`; when at least `6 kWh` is available, the system spends it to generate `1` unit each of oxygen, water, and food. The panel tracks those produced stores separately from the mission's consumable meters. During the surface drive, mission water, food, and oxygen are finite supplies and deplete over time.
+The habitat panel demonstrates a periodic production cycle: every simulated 20 seconds the solar array adds `8 kWh`; when at least `6 kWh` is available, the system spends it to generate `1` unit each of oxygen, water, and food. This is a **production demonstration only**: those generated stores do not replenish the separate mission-survival counters. The HUD labels this distinction. During the surface drive, mission water, food, and oxygen are finite supplies and deplete over time.
 
 Fuel is collected from base storage. Rover movement consumes fuel, and the rocket needs a level-specific reserve for its outbound and return legs. **Solar panels produce electrical power in this game; they do not manufacture rocket propellant.**
 
@@ -166,9 +187,12 @@ On GitHub, choose **Code → Download ZIP**, extract the archive, then start the
 ## Project layout
 
 ```text
+user_guide.md         Instructions for using the project
 index.html             Mars information, mission timeline, and Korolev Crater
 main.html              Korolev rover-drive simulator
 script.js              Simulator rendering, route planning, and telemetry
+data/                  Cropped NASA MOLA samples used by the simulator
+tools/build_mola_crop.py  Rebuilds the crop from the NASA PDS raster
 game/game.html         Sample-retrieval game
 game/script.js         Game missions, controls, and life-support logic
 game/3js.js            Bundled Three.js r128 library
@@ -180,16 +204,7 @@ game/style.css         Game styles
 ## Credits
 
 - Korolev-region imagery and topography: **ESA/DLR/FU Berlin (HRSC, Mars Express), CC BY-SA 3.0 IGO**; cropped and combined by the project under the same license.
+- Korolev-region coarse elevation comparison: NASA MGS MOLA MEGDR, dataset `MGS-M-MOLA-5-MEGDR-L3-V1.0`, [PDS DOI 10.17189/1519460](https://doi.org/10.17189/1519460).
 - Information-page hero: the latest available Curiosity or Perseverance image found through NASA's public Images and Video Library API. It is an archive image, not a live stream; a local Mars animation is used if the API is unavailable.
 - Bundled Three.js r128: **MIT License**, copyright Three.js Authors.
 - The information page's research summary cites **Brothers & Holt, 44th Lunar and Planetary Science Conference (2013), Abstract 3022**.
-
-
-
-<!-- 
-use of SI tool is done for certain things like: 
-1. conversion of geotiff format to 3js assets
-2. 3js assets generation for game
-
-Game logic is purely genuine. 
--->
