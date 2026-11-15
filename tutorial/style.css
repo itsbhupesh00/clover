@@ -288,3 +288,8 @@ body.fade-out {
     from { opacity: 1; }
     to { opacity: 0; }
 }
+
+.nepal {
+    margin-left: 70px;
+    font-size: 0.9rem;
+}

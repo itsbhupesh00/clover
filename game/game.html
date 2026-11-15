@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <title>Project Clover</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <canvas id="c">
+    </canvas>
+    <div class="p" id="hud">
+        <div>
+            <span>Time</span>
+            <b id="hTime">-</b>
+        </div>
+        <div>
+            <span>Samples</span>
+            <b id="hSamples">-</b>
+        </div>
+        <div>
+            <span>Water</span>
+            <b id="hWater">-</b>
+        </div>
+        <div>
+            <span>Food</span>
+            <b id="hFood">-</b>
+        </div>
+        <div>
+            <span>O₂</span>
+            <b id="hOxygen">-</b>
+        </div>
+        <div>
+            <span>Fuel/need</span>
+            <b id="hFuel">-</b>
+        </div>
+        <div>
+            <span>Pouches</span>
+            <b id="hPouch">-</b>
+        </div>
+    </div>
+    <div class="p" id="quota">
+    </div>
+    <div class="p" id="lifeSupport" aria-label="Habitat production and stores">
+        <strong>ONE-PERSON HABITAT</strong>
+        <div id="supportReadout"></div>
+        <small id="supportCycle"></small>
+    </div>
+    <div class="p" id="msg">Loading…</div>
+    <div class="p" id="prog">
+        <span id="progT">
+        </span>
+        <i>
+            <b id="progB">
+            </b>
+        </i>
+    </div>
+    <canvas class="p" id="mini" width="120" height="120">
+    </canvas>
+    <div class="p" id="side">
+        <div id="arrow">▲</div>
+        <span id="dist">-</span>
+        <button id="menuBtn">☰ Menu</button>
+    </div>
+    <div class="p" id="menu">
+        <select id="levelSel" aria-label="Level">
+        </select>
+        <button id="startBtn">Start level</button>
+        <button id="resetBtn">Reset progress</button>
+        <small>WASD or arrows: drive/walk. Space: jump (on foot). Shift: boost. Drag: look around. E: sample (on foot, stand still).
+            Q: scan. F: board or exit the rover. Return the rover to the launch pad and press C to launch. Levels unlock one by one.</small>
+        <nav class="page-nav" aria-label="Related pages">
+            <a href="../main.html">Open the Rover Simulator</a>
+            <a href="../index.html">Mars Exploration Information</a>
+        </nav>
+    </div>
+    <div class="p" id="acts">
+        <button id="bE" aria-keyshortcuts="E">Sample</button>
+        <button id="bQ" aria-keyshortcuts="Q">Scan</button>
+        <button id="bV" aria-keyshortcuts="F">Board/Exit</button>
+        <button id="bR" aria-keyshortcuts="C">Launch</button>
+    </div>
+    <div class="p" id="turn">
+        <button class="big" data-k="a">◀</button>
+        <button class="big" data-k="d">▶</button>
+    </div>
+    <div class="p" id="drive">
+        <button class="big" data-k="w">▲</button>
+        <button class="big" data-k="s">▼</button>
+    </div>
+    <div class="p" id="end">
+        <h2 id="endT">
+        </h2>
+        <p id="endD">
+        </p>
+        <button id="endBtn">Play again</button>
+    </div>
+    <script src="3js.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
