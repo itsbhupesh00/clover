@@ -2,7 +2,7 @@
 
 Project Clover is a browser-based Mars exploration project about the Red Planet, its robotic explorers, and the water-ice dome inside Korolev Crater. It combines an illustrated Mars information page, an interactive terrain and rover simulator, and a five-level sample-retrieval game.
 
-**Explore online:** [Mars Exploration Information](https://clover.bhupesh.com.np/index.html) · [Rover Simulator](https://clover.bhupesh.com.np/main.html) · [Mission Game](https://clover.bhupesh.com.np/game/game.html)
+**Explore online:** [Mars Exploration Information](https://clover.bhupesh.com.np/index.html) · [Rover Simulator in Korolov](https://clover.bhupesh.com.np/main.html) · [Mission Game](https://clover.bhupesh.com.np/game/game.html)
 
 ## Why Mars?
 
@@ -43,6 +43,21 @@ The mission timeline follows the shift from reconnaissance to sustained surface 
 - **Spirit and Opportunity (2004):** investigated rocks and evidence of ancient water.
 - **Curiosity (2012) and Perseverance (2021):** mobile laboratories studying habitability, geology, and samples; Perseverance also deployed the Ingenuity helicopter.
 - **International orbiters and landers:** including Mars Express, India's Mangalyaan, the UAE's Hope, and China's Tianwen-1 and Zhurong.
+
+### NASA data used by the information page
+
+At page load, `tutorial/script.js` calls NASA's public [Images and Video Library search API](https://images-api.nasa.gov/search). It makes one image search each for Curiosity and Perseverance, with the query window set dynamically from the current UTC year minus five years through the current year (`media_type=image`, `page_size=100`). No API key is required.
+
+From those search results, the page:
+
+1. Keeps records whose NASA center is `JPL` and whose title or description mentions Curiosity or Perseverance.
+2. Selects the record with the latest `date_created` value. This is the archive record's date, not necessarily the date the rover captured the image.
+3. Loads the available image rendition closest to 1,280 pixels wide from NASA's `images-assets.nasa.gov` host.
+4. Displays the image title, archive credit (`secondary_creator` or `photographer`), archive date, and a link to the NASA Images record.
+
+The API supplies the archived image and its descriptive metadata; the site does not use it as a live feed and does not request rover telemetry. If the API or image cannot be loaded, the page shows the bundled `tutorial/Mars_360_animation.gif` instead.
+
+The simulator does not load NASA imagery or terrain data: its terrain source is ESA/DLR/FU Berlin HRSC data as credited below. The Brothers & Holt SHARAD findings are summarized from their cited conference abstract; raw SHARAD measurements are not fetched by the site.
 
 ## Rover simulator
 
@@ -165,5 +180,16 @@ game/style.css         Game styles
 ## Credits
 
 - Korolev-region imagery and topography: **ESA/DLR/FU Berlin (HRSC, Mars Express), CC BY-SA 3.0 IGO**; cropped and combined by the project under the same license.
+- Information-page hero: the latest available Curiosity or Perseverance image found through NASA's public Images and Video Library API. It is an archive image, not a live stream; a local Mars animation is used if the API is unavailable.
 - Bundled Three.js r128: **MIT License**, copyright Three.js Authors.
 - The information page's research summary cites **Brothers & Holt, 44th Lunar and Planetary Science Conference (2013), Abstract 3022**.
+
+
+
+<!-- 
+use of SI tool is done for certain things like: 
+1. conversion of geotiff format to 3js assets
+2. 3js assets generation for game
+
+Game logic is purely genuine. 
+-->

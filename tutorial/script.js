@@ -149,8 +149,104 @@ document.addEventListener('DOMContentLoaded', () => {
         weightSlider.value = Math.min(weightSlider.max, currentVal);
         updateMarsWeight(currentVal);
     });
+
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const marsRoverImage = document.getElementById('marsRoverImage');
+    const marsRoverImageCaption = document.getElementById('marsRoverImageCaption');
+    if (!marsRoverImage || !marsRoverImageCaption) return;
+
+    loadLatestMarsRoverImage(marsRoverImage, marsRoverImageCaption).catch(error => {
+        console.error('Unable to load NASA Mars rover imagery:', error);
+        marsRoverImage.alt = 'Rotating Mars animation shown because NASA rover imagery is unavailable';
+        marsRoverImageCaption.textContent = 'NASA rover imagery is unavailable right now; showing the local Mars animation.';
+    });
+});
+
+async function loadLatestMarsRoverImage(image, caption) {
+    const currentYear = new Date().getUTCFullYear();
+    const firstYear = currentYear - 5;
+    const missions = ['Curiosity', 'Perseverance'];
+    const collections = await Promise.all(missions.map(async mission => {
+        try {
+            const params = new URLSearchParams({
+                q: `${mission} Mars rover`,
+                media_type: 'image',
+                year_start: String(firstYear),
+                year_end: String(currentYear),
+                page_size: '100'
+            });
+            const response = await fetch(`https://images-api.nasa.gov/search?${params.toString()}`);
+            if (!response.ok) {
+                throw new Error(`NASA Images API returned HTTP ${response.status}.`);
+            }
+            const result = await response.json();
+            return result.collection && Array.isArray(result.collection.items)
+                ? result.collection.items
+                : [];
+        } catch (error) {
+            console.error(`Unable to search NASA's archive for ${mission}:`, error);
+            return [];
+        }
+    }));
+
+    const candidates = collections.flat().filter(item => {
+        if (!item || !Array.isArray(item.data) || !item.data.length) return false;
+        const metadata = item.data[0];
+        const text = `${metadata.title || ''} ${metadata.description || ''}`;
+        return metadata.center === 'JPL' && /\b(Curiosity|Perseverance)\b/i.test(text);
+    }).sort((a, b) => Date.parse(b.data[0].date_created) - Date.parse(a.data[0].date_created));
+
+    const latest = candidates[0];
+    if (!latest) {
+        throw new Error('No recent Curiosity or Perseverance images were found in the NASA archive.');
+    }
+
+    const metadata = latest.data[0];
+    const imageLinks = (latest.links || []).filter(link =>
+        link.render === 'image' && typeof link.href === 'string'
+    );
+    imageLinks.sort((a, b) =>
+        Math.abs((a.width || 1280) - 1280) - Math.abs((b.width || 1280) - 1280)
+    );
+    if (!imageLinks.length) {
+        throw new Error('The NASA archive entry has no image rendition.');
+    }
+
+    const imageUrl = new URL(imageLinks[0].href);
+    if (imageUrl.protocol !== 'https:' || imageUrl.hostname !== 'images-assets.nasa.gov') {
+        throw new Error('The NASA archive returned an unexpected image host.');
+    }
+
+    await new Promise((resolve, reject) => {
+        const preview = new Image();
+        preview.onload = resolve;
+        preview.onerror = () => reject(new Error('The NASA image could not be loaded.'));
+        preview.src = imageUrl.href;
+    });
+
+    image.src = imageUrl.href;
+    image.alt = `NASA Mars rover image: ${metadata.title || 'rover view'}`;
+
+    const date = metadata.date_created
+        ? new Date(metadata.date_created).toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZone: 'UTC'
+        })
+        : 'date unavailable';
+    const credit = metadata.secondary_creator || metadata.photographer || 'NASA/JPL-Caltech';
+    caption.textContent = `Latest available archive image: ${metadata.title || 'Mars rover image'} — ${credit}; NASA archive entry: ${date}. `;
+
+    const sourceLink = document.createElement('a');
+    sourceLink.href = `https://images.nasa.gov/details/${encodeURIComponent(metadata.nasa_id)}`;
+    sourceLink.target = '_blank';
+    sourceLink.rel = 'noopener noreferrer';
+    sourceLink.textContent = 'View on NASA Images';
+    caption.append(sourceLink);
+}
 
 document.querySelectorAll('.image-link').forEach(link => {
     link.addEventListener('click', function (e) {

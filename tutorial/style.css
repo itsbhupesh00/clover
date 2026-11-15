@@ -293,3 +293,18 @@ body.fade-out {
     margin-left: 70px;
     font-size: 0.9rem;
 }
+
+.mars-rover-image {
+    width: 100%;
+    max-width: 400px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 1rem;
+    background: #070913;
+}
+
+@media (max-width: 768px) {
+    .mars-rover-image {
+        height: clamp(220px, 72vw, 340px);
+    }
+}
